@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>projects.awsyarmv6.ffext@staktrace.com</em:id>
+    <em:version>1.0</em:version>
+    <em:type>2</em:type>
+    <em:bootstrap>true</em:bootstrap>
+
+    <!-- Target Application this extension can install into, with minimum and maximum supported versions. -->
+    <em:targetApplication>
+      <Description>
+        <em:id>{aa3c5121-dab2-40e2-81ca-7ea25febc110}</em:id>
+        <em:minVersion>18.0a1</em:minVersion>
+        <em:maxVersion>18.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
+    <!-- Front End MetaData -->
+    <em:name>AwsyFennecAddon</em:name>
+    <em:description>Run the areweslimyet test on Fennec</em:description>
+    <em:creator>Kartikaya Gupta</em:creator>
+    <em:homepageURL>https://github.com/staktrace/awsy-armv6/</em:homepageURL>
+  </Description>
+</RDF>
