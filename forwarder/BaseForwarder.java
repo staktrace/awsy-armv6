@@ -62,6 +62,7 @@ public abstract class BaseForwarder implements Runnable, Forwarder {
                     if (! createOnDemand) {
                         throw new IOException("Unexpected request id: " + requestId);
                     }
+                    System.err.println("Opening new forwarding connection from source port " + requestId + " to destination port " + port);
                     conn = new ConnectionServer(this, port, requestId);
                     conn.start();
                 }

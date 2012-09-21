@@ -22,7 +22,7 @@ public class HostForwarder extends BaseForwarder {
         DataOutputStream toDevice = null;
         try {
             // the device-side forwarder instance has to initiate the connection
-            device = new Socket(InetAddress.getLocalHost(), _port);
+            device = new Socket(InetAddress.getByName("localhost"), _port);
             fromDevice = new DataInputStream(device.getInputStream());
             toDevice = new DataOutputStream(device.getOutputStream());
 
@@ -32,6 +32,7 @@ public class HostForwarder extends BaseForwarder {
                 System.err.println("Handshake to device machine failed!");
                 return;
             }
+            System.err.println("Handshake to device machine succeeded!");
 
             _toDevice = toDevice;
 

@@ -31,6 +31,7 @@ public class DeviceForwarder extends BaseForwarder {
                 // magic handshake
                 toHost.writeInt(MAGIC);
                 if (fromHost.readInt() == MAGIC) {
+                    System.err.println("Handshake to host machine succeeded!");
                     break;
                 }
 

@@ -24,7 +24,7 @@ class ConnectionServer extends Thread {
         _forwarder = forwarder;
         _port = port;
         _requestId = requestId;
-        _conn = new Socket(InetAddress.getLocalHost(), _port);
+        _conn = new Socket(InetAddress.getByName("localhost"), _port);
         _out = _conn.getOutputStream();
         _in = _conn.getInputStream();
 
