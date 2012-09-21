@@ -14,7 +14,7 @@ public abstract class BaseForwarder implements Runnable, Forwarder {
             out.writeInt(port);
             out.writeInt(requestId);
             if (data == null) {
-                out.write(-1);
+                out.writeInt(-1);
             } else {
                 out.writeInt(len);
                 out.write(data, 0, len);
@@ -40,7 +40,7 @@ public abstract class BaseForwarder implements Runnable, Forwarder {
             conns.addAll(_connections.values());
         }
         for (ConnectionServer conn : conns) {
-            conn.fromForwarder(null, 0);
+            conn.fromForwarder(null, -1);
         }
     }
 
@@ -51,7 +51,8 @@ public abstract class BaseForwarder implements Runnable, Forwarder {
             int port;
             try {
                 port = in.readInt();
-            } catch (IOException ioe) {
+            } catch (EOFException e) {
+                System.err.println("Main incoming stream terminated; shutting down...");
                 break;
             }
             int requestId = in.readInt();
@@ -69,8 +70,8 @@ public abstract class BaseForwarder implements Runnable, Forwarder {
             }
             int len = in.readInt();
             if (len < 0) {
-                conn.fromForwarder(null, 0);
-            } else {
+                conn.fromForwarder(null, -1);
+            } else if (len > 0) {
                 in.readFully(buf, 0, len);
                 conn.fromForwarder(buf, len);
             }

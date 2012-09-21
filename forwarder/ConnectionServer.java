@@ -39,10 +39,10 @@ class ConnectionServer extends Thread {
         if (data != null) {
             try {
                 _out.write(data, 0, len);
+                return;
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }
-            return;
         }
 
         try {
@@ -64,21 +64,22 @@ class ConnectionServer extends Thread {
     }
 
     public void run() {
-        byte[] b = new byte[Forwarder.MAX_BLOCK_SIZE];
+        byte[] buf = new byte[Forwarder.MAX_BLOCK_SIZE];
         while (true) {
             try {
-                int len = _in.read(b);
+                int len = _in.read(buf);
                 if (len < 0) {
                     break;
                 }
-                _forwarder.send(_port, _requestId, b, len);
+                _forwarder.send(_port, _requestId, buf, len);
             } catch (IOException ioe) {
                 ioe.printStackTrace();
+                break;
             }
         }
 
         try {
-            _forwarder.send(_port, _requestId, null, 0);
+            _forwarder.send(_port, _requestId, null, -1);
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
