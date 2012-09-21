@@ -45,10 +45,6 @@ class ConnectionServer extends Thread {
             }
         }
 
-        try {
-            _out.close();
-        } catch (IOException ioe) {
-        }
         _out = null;
         checkClose();
     }
@@ -84,10 +80,6 @@ class ConnectionServer extends Thread {
             ioe.printStackTrace();
         }
 
-        try {
-            _in.close();
-        } catch (IOException ioe) {
-        }
         _in = null;
         checkClose();
     }
