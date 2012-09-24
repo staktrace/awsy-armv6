@@ -27,13 +27,6 @@ var kUrls = [
     "http://localhost:8016/tp5/bbc.co.uk/www.bbc.co.uk/news/index.html",
     "http://localhost:8017/tp5/store.apple.com/store.apple.com/us@mco=Nzc1MjMwNA.html",
     "http://localhost:8018/tp5/imdb.com/www.imdb.com/title/tt1099212/index.html",
-    "http://localhost:8019/tp5/mozilla.com/www.mozilla.com/en-US/firefox/all-older.html",
-    "http://localhost:8020/tp5/ask.com/www.ask.com/web@q=What%27s+the+difference+between+brown+and+white+eggs%253F&gc=1&qsrc=3045&o=0&l=dir.html",
-    "http://localhost:8021/tp5/cnn.com/www.cnn.com/index.html",
-    "http://localhost:8022/tp5/sohu.com/www.sohu.com/index.html",
-    "http://localhost:8023/tp5/vkontakte.ru/vkontakte.ru/help.php@page=about.html",
-    "http://localhost:8024/tp5/youku.com/www.youku.com/index.html",
-    "http://localhost:8025/tp5/myparentswereawesome.tumblr.com/myparentswereawesome.tumblr.com/index.html",
 ];
 
 var gWindow = null;
