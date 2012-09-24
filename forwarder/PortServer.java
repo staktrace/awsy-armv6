@@ -9,12 +9,22 @@ class PortServer extends Thread {
     private boolean _die;
 
     PortServer(Forwarder forwarder, int port) {
+        setDaemon(true);
+
         _forwarder = forwarder;
         _port = port;
     }
 
     public synchronized void kill() {
         _die = true;
+        close();
+    }
+
+    private synchronized boolean dead() {
+        return _die;
+    }
+
+    private void close() {
         try {
             _socket.close();
         } catch (IOException ioe) {
@@ -24,25 +34,14 @@ class PortServer extends Thread {
     public void run() {
         try {
             _socket = new ServerSocket(_port);
-            while (true) {
-                synchronized (this) {
-                    if (_die) {
-                        break;
-                    }
-                }
+            while (! dead()) {
                 Socket client = _socket.accept();
                 new ConnectionServer(_forwarder, _port, client).start();
             }
         } catch (IOException ioe) {
-            synchronized (this) {
-                if (_die) {
-                    return;
-                }
-            }
-            ioe.printStackTrace();
-            try {
-                _socket.close();
-            } catch (IOException e) {
+            if (! dead()) {
+                ioe.printStackTrace();
+                close();
             }
         }
     }

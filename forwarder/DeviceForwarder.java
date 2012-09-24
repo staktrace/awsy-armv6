@@ -15,12 +15,13 @@ public class DeviceForwarder extends BaseForwarder {
     }
 
     public void run() {
+        Socket host = null;
+        DataInputStream fromHost = null;
+        DataOutputStream toHost = null;
+
         try {
             // the host-side forwarder instance has to initiate the connection
             ServerSocket socket = new ServerSocket(_port);
-            Socket host;
-            DataInputStream fromHost;
-            DataOutputStream toHost;
 
             while (true) {
                 host = socket.accept();
@@ -47,6 +48,7 @@ public class DeviceForwarder extends BaseForwarder {
             // read range of ports to forward
             int minPort = fromHost.readInt();
             int maxPort = fromHost.readInt();
+            System.err.println("Spawning port servers on ports [" + minPort + ", " + maxPort + ")");
             List<PortServer> servers = new ArrayList<PortServer>();
             for (int i = minPort; i < maxPort; i++) {
                 PortServer s = new PortServer(this, i);
@@ -60,13 +62,22 @@ public class DeviceForwarder extends BaseForwarder {
                 s.kill();
             }
 
-            kill();
-
-            fromHost.close();
-            toHost.close();
-            host.close();
-        } catch (IOException e) {
+            killConnections();
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                fromHost.close();
+            } catch (Exception e) {
+            }
+            try {
+                toHost.close();
+            } catch (Exception e) {
+            }
+            try {
+                host.close();
+            } catch (Exception e) {
+            }
         }
     }
 }

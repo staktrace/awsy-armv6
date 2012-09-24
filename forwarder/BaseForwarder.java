@@ -22,19 +22,21 @@ public abstract class BaseForwarder implements Runnable, Forwarder {
         }
     }
 
-    public void addConnection(ConnectionServer conn) {
+    public final void addConnection(ConnectionServer conn) {
         synchronized (_connections) {
             _connections.put(conn.getRequestId(), conn);
         }
+        System.err.println("Adding connection: " + conn);
     }
 
-    public void removeConnection(ConnectionServer conn) {
+    public final void removeConnection(ConnectionServer conn) {
         synchronized (_connections) {
             _connections.remove(conn.getRequestId());
         }
+        System.err.println("Removing connection: " + conn);
     }
 
-    protected final void kill() {
+    protected final void killConnections() {
         List<ConnectionServer> conns = new ArrayList<ConnectionServer>();
         synchronized (_connections) {
             conns.addAll(_connections.values());
@@ -56,23 +58,26 @@ public abstract class BaseForwarder implements Runnable, Forwarder {
                 break;
             }
             int requestId = in.readInt();
+            int len = in.readInt();
+            if (len > 0) {
+                in.readFully(buf, 0, len);
+            }
+
             ConnectionServer conn;
             synchronized (_connections) {
                 conn = _connections.get(requestId);
                 if (conn == null) {
                     if (! createOnDemand) {
-                        throw new IOException("Unexpected request id: " + requestId);
+                        System.err.println("Unexpected request id: " + requestId + "; incoming data of length " + len);
+                        continue;
                     }
-                    System.err.println("Opening new forwarding connection from source port " + requestId + " to destination port " + port);
                     conn = new ConnectionServer(this, port, requestId);
                     conn.start();
                 }
             }
-            int len = in.readInt();
             if (len < 0) {
                 conn.fromForwarder(null, -1);
             } else if (len > 0) {
-                in.readFully(buf, 0, len);
                 conn.fromForwarder(buf, len);
             }
         }

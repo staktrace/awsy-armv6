@@ -20,6 +20,7 @@ public class HostForwarder extends BaseForwarder {
         Socket device = null;
         DataInputStream fromDevice = null;
         DataOutputStream toDevice = null;
+
         try {
             // the device-side forwarder instance has to initiate the connection
             device = new Socket(InetAddress.getByName("localhost"), _port);
@@ -36,12 +37,14 @@ public class HostForwarder extends BaseForwarder {
 
             _toDevice = toDevice;
 
-            // read range of ports to forward
+            // write range of ports to forward
             toDevice.writeInt(_port + 1);
             toDevice.writeInt(_port + 1 + _numPorts);
 
             loop(fromDevice, true);
-        } catch (IOException e) {
+
+            killConnections();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
