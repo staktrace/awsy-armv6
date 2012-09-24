@@ -4,14 +4,16 @@ export STAGE="http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/m
 export ROOT=$HOME/awsy-armv6/data
 
 export PICKLAST=1
+export BUILDID=
 BUILDID=$(links -dump $STAGE/ | grep ' \[DIR\] ' | awk '{ print $2 }' | sed -e "s#/##" | sort -n |
     while read buildstamp; do
         if [[ -d $ROOT/$buildstamp ]]; then
-            echo ""
+            BUILDID=
             PICKLAST=0
         elif [[ -z $BUILDID || $PICKLAST -eq 1 ]]; then
-            echo "$buildstamp"
+            BUILDID=$buildstamp
         fi
+        echo "$BUILDID"
     done |
     tail -n 1)
 
