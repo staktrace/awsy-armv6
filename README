@@ -34,3 +34,16 @@ Fennec addon (mozmill replacement) setup:
 
 adb push fennec-addon-awsy/awsy.xpi /sdcard/
 # start fennec, load /sdcard/ and click on awsy.xpi, install the addon
+# then quit fennec and make a backup of the clean profile
+adb shell
+-> su
+-> cd /data/data/org.mozilla.fennec_$USER
+-> tar czf /sdcard/profile.tgz *
+
+Fennec profile reset:
+
+adb shell
+-> su
+-> cd /data/data/org.mozilla.fennec_$USER
+-> rm -r *
+-> tar xzf /sdcard/profile.tgz
