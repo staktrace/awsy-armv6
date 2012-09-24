@@ -22,7 +22,7 @@ if [ $? -eq 0 ]; then
     java -cp $ROOT/forwarder/host-forwarder.jar Main -host 8000 25 > host-forwarder.log 2>&1 &
     PID_FORWARDER=$!
     sleep 5
-    echo "Starting fennec..."
+    echo "Starting fennec and running test..."
     adb shell am start -n org.mozilla.fennec/.App
     adb logcat -v time > device.log &
     PID_LOGCAT=$!
@@ -40,9 +40,11 @@ if [ $? -eq 0 ]; then
         fi
     done
     echo "Shutting down..."
+    adb shell "echo 'busybox pkill org.mozilla.fennec' | su"
+    sleep 2
     kill $PID_FORWARDER
     kill $PID_LOGCAT
-    sleep 5
+    sleep 2
     adb shell dumpsys > dumpsys-end.log
 else
     echo "Unable to find APK file; check $DIR/ for errors"
