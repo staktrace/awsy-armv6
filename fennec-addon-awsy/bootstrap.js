@@ -12,7 +12,7 @@ var kUrls = [
     "http://localhost:8001/tp5/thesartorialist.blogspot.com/thesartorialist.blogspot.com/index.html",
     "http://localhost:8002/tp5/cakewrecks.blogspot.com/cakewrecks.blogspot.com/index.html",
     "http://localhost:8003/tp5/baidu.com/www.baidu.com/s@wd=mozilla.html",
-    "http://localhost:8004/tp5/en.wikipedia.org/en.wikipedia.org/wiki/Rorschach_test.html",
+    //"http://localhost:8004/tp5/en.wikipedia.org/en.wikipedia.org/wiki/Rorschach_test.html",   // redirects to mobile site and fails
     "http://localhost:8005/tp5/twitter.com/twitter.com/ICHCheezburger.html",
     "http://localhost:8006/tp5/msn.com/www.msn.com/index.html",
     "http://localhost:8007/tp5/yahoo.co.jp/www.yahoo.co.jp/index.html",
@@ -42,7 +42,7 @@ var gTabsOpened = 0;
 function setPreferences() {
     var prefs = [
         {   name: "network.proxy.socks",                type: "string", value: "localhost"  },
-        {   name: "network.proxy.socks_port",           type: "int",    value: 90000        },
+        {   name: "network.proxy.socks_port",           type: "int",    value: 9000         },
         {   name: "network.proxy.socks_remote_dns",     type: "bool",   value: true         },
         {   name: "network.proxy.type",                 type: "int",    value: 1            },
         {   name: "plugin.disable",                     type: "bool",   value: true         },
