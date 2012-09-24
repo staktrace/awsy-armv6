@@ -69,6 +69,17 @@ If you want to run a pre-downloaded build, you can skip the download step and ru
 where <folder> contains the APK that needs to be tested.
 WARNING: log files and output data will be put into <folder> as well, possibly clobbering any existing log files, so back up anything you want saved before running this!
 
+Part 3: RESULTS
+===============
+
+Log files
+---------
+
+Log files are dumped into the same folder as the APK. The following files are created:
+* dumpsys-start.log, dumpsys-end.log - The output from "adb shell dumpsys" before and after the test, to provide a reasonably comprehensive description of the environment. This can mostly for diagnostic purposes, in case there are weird test results that need investigation.
+* device-forwarder.log, host-forwarder.log - Log files from the forwarding setup. These can mostly be ignored, but again are provided for diagnostic purposes. Note that these often have exceptions in them due to socket closures, that is expected and normal.
+* device.log - The logcat from the device while the test is running, including all the memory stats dumped.
+
 Gotchas
 =======
 
