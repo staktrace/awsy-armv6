@@ -44,9 +44,8 @@ Once the above assumptions are satisified, enter the awsy-armv6 folder and run:
 
     # start fennec, and install the add-on from /sdcard/awsy.xpi (manual approval on-device needed here).
     # note that you may also get a telemetry prompt, feel free to accept that.
-    adb shell am start -n org.mozill.fennec/.App -d "file:///sdcard/awsy.xpi"
+    adb shell am start -n org.mozilla.fennec/.App -d "file:///sdcard/awsy.xpi"
     # quit fennec QUICKLY after this (within 30 seconds, or the add-on will start loading pages and dirty your profile).
-    adb shell "echo 'busybox pkill org.mozilla.fennec' | su"
 
     # make a backup of the "clean" profile:
     adb shell "echo 'rm /sdcard/profile.tgz; cd /data/data/org.mozilla.fennec && busybox tar czf /sdcard/profile.tgz *' | su"
