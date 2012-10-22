@@ -8,6 +8,7 @@ pushd $DIR >/dev/null
 export ROOT=$HOME/awsy-armv6
 export ANDROID_SERIAL=B7510361ef029
 
+FAILED=1
 ls fennec-*-armv6.apk
 if [ $? -eq 0 ]; then
     echo "Setting up device with Fennec..."
@@ -30,6 +31,7 @@ if [ $? -eq 0 ]; then
         sleep 10;
         grep "AWSY-ARMV6-DONE" device.log
         if [ $? -eq 0 ]; then
+            FAILED=0
             echo "Successful end of test marker found!"
             break
         fi
@@ -53,3 +55,5 @@ fi
 echo "All done!"
 
 popd >/dev/null
+
+exit $FAILED
