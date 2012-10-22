@@ -48,6 +48,8 @@ if [ $? -eq 0 ]; then
     kill $PID_LOGCAT
     sleep 2
     adb shell dumpsys > dumpsys-end.log
+    adb pull /data/data/org.mozilla.fennec/app_tmp/
+    adb shell "rm /data/data/org.mozilla.fennec/app_tmp/*"
 else
     echo "Unable to find APK file; check $DIR/ for errors"
 fi

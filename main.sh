@@ -9,7 +9,7 @@ if [ $? -eq 0 ]; then
         fi
         echo "Running the build at $BUILD failed; saving logs to $BUILD/failed-$i and trying again..."
         mkdir -p $BUILD/failed-$i
-        mv $BUILD/*.log $BUILD/failed-$i
+        mv $BUILD/*.log $BUILD/*.gz $BUILD/failed-$i
         sleep 5
     done
     echo "Unable to run the build $BUILD successfully after 5 attempts; giving up!"
