@@ -25,8 +25,6 @@ var kUrls = [
     "http://localhost:8014/tp5/163.com/www.163.com/index.html",
     "http://localhost:8015/tp5/mail.ru/mail.ru/index.html",
     "http://localhost:8016/tp5/bbc.co.uk/www.bbc.co.uk/news/index.html",
-    "http://localhost:8017/tp5/store.apple.com/store.apple.com/us@mco=Nzc1MjMwNA.html",
-    "http://localhost:8018/tp5/imdb.com/www.imdb.com/title/tt1099212/index.html",
 ];
 
 var gWindow = null;
