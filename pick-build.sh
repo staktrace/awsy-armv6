@@ -18,6 +18,11 @@ BUILDID=$(links -dump $STAGE/ | grep ' \[DIR\] ' | awk '{ print $2 }' | sed -e "
     tail -n 1)
 
 if [[ -n $BUILDID ]]; then
+    if [[ -d $ROOT/$BUILDID ]]; then
+        echo "Found pre-existing folder $ROOT/$BUILDID so skipping re-download..." >/dev/stderr
+        echo "$ROOT/$BUILDID"
+        exit 0;
+    fi
     mkdir -p $ROOT/$BUILDID
     pushd $ROOT/$BUILDID >/dev/null 2>&1
     APK=$(links -dump $STAGE/$BUILDID/ | grep "fennec-.*-armv6.apk" | awk '{print $3}')
