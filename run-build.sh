@@ -15,8 +15,9 @@ if [ $? -eq 0 ]; then
     adb shell dumpsys > dumpsys-start.log
     adb logcat -c
     adb forward tcp:8000 tcp:8000
-    adb install -r *.apk
-    adb shell "echo 'cd /data/data/org.mozilla.fennec && rm -r * && busybox tar xzf /sdcard/profile.tgz' | su"
+    adb uninstall org.mozilla.fennec
+    adb install *.apk
+    adb shell "echo 'cd /data/data/org.mozilla.fennec && busybox tar xzf /sdcard/profile.tgz' | su"
     echo "Setting up port forwarding..."
     adb shell "echo 'dalvikvm -cp /sdcard/device-forwarder.jar Main -device 8000 25' | su" > device-forwarder.log 2>&1 &
     sleep 1

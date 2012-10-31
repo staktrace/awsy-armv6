@@ -48,8 +48,8 @@ Once the above assumptions are satisified, enter the awsy-armv6 folder and run:
     adb shell am start -n org.mozilla.fennec/.App -d "file:///sdcard/awsy.xpi"
     # quit fennec QUICKLY after this (within 30 seconds, or the add-on will start loading pages and dirty your profile).
 
-    # make a backup of the "clean" profile:
-    adb shell "echo 'rm /sdcard/profile.tgz; cd /data/data/org.mozilla.fennec && busybox tar czf /sdcard/profile.tgz *' | su"
+    # make a backup of the "clean" profile (everything in /data/data/org.mozilla.fennec except libs/):
+    adb shell "echo 'rm /sdcard/profile.tgz; cd /data/data/org.mozilla.fennec && busybox tar czf /sdcard/profile.tgz files shared_prefs app_plugins app_tmp cache res databases' | su"
 
 Part 2: RUNNING
 ===============
