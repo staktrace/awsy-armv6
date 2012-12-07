@@ -16,5 +16,5 @@ if [ $? -eq 0 ]; then
     exit 1
 else
     echo "No new builds found; terminating"
-    exit 1
+    exit 2
 fi
