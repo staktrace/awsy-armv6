@@ -9,12 +9,13 @@ for i in ../data/*; do
     PID=${PID##*-}
     PID=${PID%%.*}
     TIMESTAMP=$(head -1 $i/fennec-*-armv6.txt)
+    HGCSET=$(tail -1 $i/fennec-*-armv6.txt)
     for j in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
         zcat $i/memory-report-$j-$PID.json.gz | java -cp sts_util.jar com.staktrace.util.conv.json.Extractor -object - reports/path=resident/amount reports/path=explicit/amount |
         while read resident; do
-            echo "      [ $TIMESTAMP, $resident ]," >> resident-$j.graphdata
+            echo "      [ $TIMESTAMP, $resident, $HGCSET ]," >> resident-$j.graphdata
             read explicit;
-            echo "      [ $TIMESTAMP, $explicit ]," >> explicit-$j.graphdata
+            echo "      [ $TIMESTAMP, $explicit, $HGCSET ]," >> explicit-$j.graphdata
         done
     done
 done
