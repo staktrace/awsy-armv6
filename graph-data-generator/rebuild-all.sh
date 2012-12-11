@@ -13,9 +13,9 @@ for i in ../data/*; do
     for j in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
         zcat $i/memory-report-$j-$PID.json.gz | java -cp sts_util.jar com.staktrace.util.conv.json.Extractor -object - reports/path=resident/amount reports/path=explicit/amount |
         while read resident; do
-            echo "      [ $TIMESTAMP, $resident, $HGCSET ]," >> resident-$j.graphdata
+            echo "      [ \"$TIMESTAMP\", $resident, \"$HGCSET\" ]," >> resident-$j.graphdata
             read explicit;
-            echo "      [ $TIMESTAMP, $explicit, $HGCSET ]," >> explicit-$j.graphdata
+            echo "      [ \"$TIMESTAMP\", $explicit, \"$HGCSET\" ]," >> explicit-$j.graphdata
         done
     done
 done
@@ -23,8 +23,8 @@ for i in resident explicit; do
     echo "[" >> $i.graphdata
     for j in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
         echo "  {" >> $i.graphdata
-        echo '    "label": "' $j '",' >> $i.graphdata
-        echo '    "data": [' >> $i.graphdata
+        echo "    \"label\": \"$j\"," >> $i.graphdata
+        echo "    \"data\": [" >> $i.graphdata
         cat $i-$j.graphdata >> $i.graphdata
         rm $i-$j.graphdata
         echo "      null" >> $i.graphdata
