@@ -1,3 +1,7 @@
 *.xpi
 *.class
 *.jar
+*.graphdata
+data/
+junk-data/
+loop.log
