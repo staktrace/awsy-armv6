@@ -41,6 +41,11 @@ if [ $? -eq 0 ]; then
             echo "Fennec appears to have died before the test completed!"
             break
         fi
+        grep "Entered the Android system server" device.log
+        if [ $? -eq 0 ]; then
+            echo "The device may have rebooted during test!"
+            break;
+        fi
     done
     echo "Shutting down..."
     adb shell "echo 'busybox pkill org.mozilla.fennec' | su"
