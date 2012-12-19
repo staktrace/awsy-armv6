@@ -12,6 +12,7 @@
     .detail {
         float: left;
         border: solid 1px black;
+        margin-left: 10px;
     }
 
     td {
@@ -122,8 +123,14 @@
                         var detailHtml = '<table><tr><th>timestamp</th><th>' + metric + '</th><th>changeset</th></tr>';
                         if (item) {
                             var detailData = document.getElementById( divId )._detailData[item.series.label][item.dataIndex];
+                            var lastCset = null;
                             for (var i = 0; i < detailData.length; i++) {
-                                detailHtml += '<tr><td>' + detailData[i][0] + '</td><td>' + detailData[i][1] + '</td><td><a href="' + detailData[i][2] + '">' + detailData[i][2] + '</a></td></tr>';
+                                var cset = detailData[i][2].substring(detailData[i][2].lastIndexOf('/') + 1);
+                                var link = (lastCset != null)
+                                    ? 'https://hg.mozilla.org/integration/mozilla-inbound/pushloghtml?fromchange=' + lastCset + '&tochange=' + cset
+                                    : 'https://hg.mozilla.org/integration/mozilla-inbound/rev/' + cset;
+                                lastCset = cset;
+                                detailHtml += '<tr><td>' + detailData[i][0] + '</td><td>' + detailData[i][1] + '</td><td><a href="' + link + '">' + cset + '</a></td></tr>';
                             }
                         }
                         detailHtml += '</table>';
