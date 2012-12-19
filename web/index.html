@@ -4,14 +4,18 @@
   <title>Are We Slim Yet?</title>
   <style type="text/css">
     .graph {
+        float: left;
         width: 700px;
         height: 600px;
     }
 
     .detail {
-        float: right;
-        width: 300px;
+        float: left;
         border: solid 1px black;
+    }
+
+    td {
+        padding: 2px;
     }
   </style>
  </head>
@@ -102,7 +106,7 @@
                         if (item) {
                             var detailData = document.getElementById( divId )._detailData[item.series.label][item.dataIndex];
                             for (var i = 0; i < detailData.length; i++) {
-                                detailHtml += '<tr><td>' + detailData[i][0] + '</td><td>' + detailData[i][1] + '</td><td>' + detailData[i][2] + '</td></tr>';
+                                detailHtml += '<tr><td>' + detailData[i][0] + '</td><td>' + detailData[i][1] + '</td><td><a href="' + detailData[i][2] + '">' + detailData[i][2] + '</a></td></tr>';
                             }
                         }
                         detailHtml += '</table>';
