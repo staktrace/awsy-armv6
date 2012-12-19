@@ -41,6 +41,23 @@
         grid: {
             clickable: true
         },
+        xaxis: {
+            show: true,
+            tickFormatter: function(val, axis) {
+                var d = new Date( val * 1000 );
+                return d.toDateString();
+            }
+        },
+        yaxis: {
+            show: true,
+            tickFormatter: function(val, axis) {
+                return (val / 1048576).toFixed(axis.tickDecimals) + " MiB";
+            }
+        },
+        legend: {
+            position: "nw",
+            margin: [0, 200]
+        },
         hooks: {
             processRawData: function( plot, series, data, datapoints ) {
                 var parentDiv = plot.getCanvas().parentNode;
