@@ -21,6 +21,8 @@ printf 'INSERT INTO `benchtester_tests` (`name`, `time`, `build_id`, `successful
         "$TESTNAME" "$TESTTIME" "1" "$FULLCSET" >> awsy.sql
 
 TMPFILE=$(mktemp)
+PATHS=$(mktemp)
+NEWPATH=$(mktemp)
 for i in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
     zcat memory-report-$i-$PID.json.gz > $TMPFILE
     COUNT=$(grep "path" $TMPFILE | wc -l)
@@ -32,10 +34,21 @@ for i in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed 
     xargs java -cp ../../awsy-data-generator/sts_util.jar com.staktrace.util.conv.json.Extractor -object $TMPFILE |
     while read -r LABEL && read -r VALUE; do
         LABEL=${LABEL//\"/\"\"}
-        printf 'INSERT INTO `benchtester_data` (`test_id`, `datapoint`, `value`) SELECT `id`, "%s", "%s" FROM benchtester_tests WHERE `name`="%s" AND `time`="%s";\n' \
-            "Iteration 1/$i/$LABEL" "$VALUE" "$TESTNAME" "$TESTTIME" >> awsy.sql
+        LABEL="Iteration 1/$i/$LABEL"
+        echo "$LABEL" > $NEWPATH
+        grep -Fxf "$NEWPATH" "$PATHS" >/dev/null
+        if [ $? -eq 0 ]; then
+            printf 'UPDATE `benchtester_data` SET `value`=`value`+"%s" WHERE `datapoint`="%s" AND `test_id`=(SELECT `id` FROM `benchtester_tests` WHERE `name`="%s" AND `time`="%s");\n' \
+                "$VALUE" "$LABEL" "$TESTNAME" "$TESTTIME" >> awsy.sql
+        else
+            cat $NEWPATH >> $PATHS
+            printf 'INSERT INTO `benchtester_data` (`test_id`, `datapoint`, `value`) SELECT `id`, "%s", "%s" FROM `benchtester_tests` WHERE `name`="%s" AND `time`="%s";\n' \
+                "$LABEL" "$VALUE" "$TESTNAME" "$TESTTIME" >> awsy.sql
+        fi
     done
 done
 rm $TMPFILE
+rm $NEWPATH
+rm $PATHS
 
 popd >/dev/null
