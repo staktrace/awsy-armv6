@@ -17,7 +17,7 @@ TESTTIME=$(stat -c %Y memory-report-TabsClosedForceGC-$PID.json.gz)
 TESTNAME="Android-ARMv6"
 
 printf 'REPLACE INTO `benchtester_builds` (`name`, `time`) VALUES ("%s", "%s");\n' $FULLCSET $PUSHTIME > awsy.sql
-printf 'INSERT INTO `benchtester_tests` (`name`, `time`, `build_id`, `successful`) SELECT "%s", "%s", `id`, "%s" FROM benchtester_builds WHERE `name`="%s";\n' \
+printf 'INSERT INTO `benchtester_tests` (`name`, `time`, `build_id`, `successful`) SELECT "%s", "%s", `id`, "%s" FROM benchtester_builds WHERE `name`="%s" LIMIT 1;\n' \
         "$TESTNAME" "$TESTTIME" "1" "$FULLCSET" >> awsy.sql
 
 TMPFILE=$(mktemp)
@@ -30,7 +30,8 @@ for i in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed 
         done
     ) |
     xargs java -cp ../../awsy-data-generator/sts_util.jar com.staktrace.util.conv.json.Extractor -object $TMPFILE |
-    while read LABEL && read VALUE; do
+    while read -r LABEL && read -r VALUE; do
+        LABEL=${LABEL//\"/\"\"}
         printf 'INSERT INTO `benchtester_data` (`test_id`, `datapoint`, `value`) SELECT `id`, "%s", "%s" FROM benchtester_tests WHERE `name`="%s" AND `time`="%s";\n' \
             "Iteration 1/$i/$LABEL" "$VALUE" "$TESTNAME" "$TESTTIME" >> awsy.sql
     done
