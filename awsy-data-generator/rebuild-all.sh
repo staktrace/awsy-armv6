@@ -5,11 +5,7 @@ for i in ../data/*; do
         echo "Missing data in $i"
         continue
     fi
-    if [ -f $i/awsy.sql ]; then
-        continue
-    fi
     PID=${PID##*-}
     PID=${PID%%.*}
-    echo "Processing data in $i"
     ./rebuild-sql.sh $i $PID
 done

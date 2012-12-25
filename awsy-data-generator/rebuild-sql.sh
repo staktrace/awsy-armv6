@@ -4,6 +4,12 @@ USAGE="$0 <data-folder> <pid>"
 FOLDER=${1?$USAGE}
 PID=${2?$USAGE}
 
+if [ -f "$FOLDER/awsy.sql.gz" ]; then
+    exit 0;
+fi
+
+echo "Processing data in $FOLDER"
+
 pushd $FOLDER >/dev/null
 if [ ! -f "pushlog.json" ]; then
     HGURL=$(tail -1 fennec-*-armv6.txt)
@@ -51,4 +57,5 @@ rm $TMPFILE
 rm $NEWPATH
 rm $PATHS
 
+gzip awsy.sql
 popd >/dev/null
