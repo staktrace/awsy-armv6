@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 rm *.graphdata
 for i in ../data/*; do
-    PID=$(ls $i/memory-report-TabsClosedForceGC-*.json.gz)
+    PID=$(ls $i/memory-report-TabsClosedForceGC-*.json.gz 2>/dev/null)
     if [ $? -ne 0 ]; then
         echo "Missing data in $i" > /dev/stderr
         continue
