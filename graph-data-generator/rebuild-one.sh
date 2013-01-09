@@ -9,8 +9,6 @@ if [ $? -ne 0 ]; then
 fi
 PID=${PID##*-}
 PID=${PID%%.*}
-TIMESTAMP=$(head -1 $DIR/fennec-*-armv6.txt)
-HGCSET=$(tail -1 $DIR/fennec-*-armv6.txt)
 if [ ! -f "$DIR/memory-summary.json" ]; then
     for j in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
         zcat $DIR/memory-report-$j-$PID.json.gz | java -cp sts_util.jar com.staktrace.util.conv.json.Extractor -object - reports/path=resident/amount reports/path=explicit/amount >> $DIR/memory-summary.json

@@ -5,6 +5,8 @@ for i in ../data/*; do
     if [ $? -eq 1 ]; then
         continue
     fi
+    TIMESTAMP=$(head -1 $i/fennec-*-armv6.txt)
+    HGCSET=$(tail -1 $i/fennec-*-armv6.txt)
     cat $i/memory-summary.json |
     for j in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
         read resident
