@@ -24,6 +24,7 @@ if [ $? -eq 0 ]; then
     java -cp $ROOT/forwarder/host-forwarder.jar Main -host 8000 25 > host-forwarder.log 2>&1 &
     PID_FORWARDER=$!
     sleep 5
+    ABORT_TIME=$(($(date +%s) + 1800)) # give it 30 minutes
     echo "Starting fennec and running test..."
     adb shell am start -n org.mozilla.fennec/.App
     adb logcat -v time > device.log &
@@ -44,7 +45,12 @@ if [ $? -eq 0 ]; then
         grep "Entered the Android system server" device.log
         if [ $? -eq 0 ]; then
             echo "The device may have rebooted during test!"
-            break;
+            break
+        fi
+        NOW=$(date +%s)
+        if [ $NOW -gt $ABORT_TIME ]; then
+            echo "Hit abort timeout; bailing out!"
+            break
         fi
     done
     echo "Shutting down..."
