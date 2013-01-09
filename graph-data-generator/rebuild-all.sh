@@ -1,19 +1,9 @@
 #!/usr/bin/env bash
 rm *.graphdata
 for i in ../data/*; do
-    PID=$(ls $i/memory-report-TabsClosedForceGC-*.json.gz 2>/dev/null)
-    if [ $? -ne 0 ]; then
-        echo "Missing data in $i" > /dev/stderr
+    ./rebuild-one.sh $i
+    if [ $? -eq 1 ]; then
         continue
-    fi
-    PID=${PID##*-}
-    PID=${PID%%.*}
-    TIMESTAMP=$(head -1 $i/fennec-*-armv6.txt)
-    HGCSET=$(tail -1 $i/fennec-*-armv6.txt)
-    if [ ! -f "$i/memory-summary.json" ]; then
-        for j in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
-            zcat $i/memory-report-$j-$PID.json.gz | java -cp sts_util.jar com.staktrace.util.conv.json.Extractor -object - reports/path=resident/amount reports/path=explicit/amount >> $i/memory-summary.json
-        done
     fi
     cat $i/memory-summary.json |
     for j in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
