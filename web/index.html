@@ -113,7 +113,7 @@
     function showDetail( metric, divId, label, index ) {
         var detailHtml = '';
         if (label && index) {
-            detailHtml = '<table><tr><th colspan="3">data series: ' + label + ' (<a href="' + window.location.protocol + '//' + window.location.host + window.location.pathname + '#which=' + label + ',when=' + index + '">link</a>)</th></tr><tr><th>timestamp</th><th>' + metric + '</th><th>changeset</th></tr>';
+            detailHtml = '<table><tr><th colspan="3">data series: ' + label + ' </th></tr><tr><th>timestamp</th><th>' + metric + '</th><th>changeset</th></tr>';
             var detailData = document.getElementById( divId )._detailData[label][index];
             var lastCset = null;
             for (var i = 0; i < detailData.length; i++) {
@@ -125,8 +125,23 @@
                 detailHtml += '<tr><td>' + detailData[i][0] + '</td><td>' + detailData[i][1] + '</td><td><a href="' + link + '">' + cset + '</a></td></tr>';
             }
             detailHtml += '</table>';
+            window.location.hash = '#which=' + label + ',when=' + index;
         }
         document.getElementById( metric + '-detail' ).innerHTML = detailHtml;
+    }
+
+    function showHash( metric, divId ) {
+        if (window.location.hash) {
+            var params = window.location.hash.substring(1).split(',');
+            var args = new Array();
+            for (var i = 0; i < params.length; i++) {
+                params[i] = params[i].split('=');
+                args[params[i][0]] = params[i][1];
+            }
+            showDetail( metric, divId, args["which"], args["when"] );
+        } else {
+            showDetail( metric, divId, null, null );
+        }
     }
 
     function load( metric ) {
@@ -143,15 +158,7 @@
                         showDetail( metric, divId, item ? item.series.label : null, item ? item.dataIndex : null );
                     } );
 
-                    if (window.location.hash) {
-                        var params = window.location.hash.substring(1).split(',');
-                        var args = new Array();
-                        for (var i = 0; i < params.length; i++) {
-                            params[i] = params[i].split('=');
-                            args[params[i][0]] = params[i][1];
-                        }
-                        showDetail( metric, divId, args["which"], args["when"] );
-                    }
+                    showHash( metric, divId );
                 } else {
                     document.getElementById( divId ).innerHTML = 'Error fetching graph data :(';
                 }
@@ -162,6 +169,11 @@
 
     load( 'resident' );
     load( 'explicit' );
+
+    window.onhashchange = function(e) {
+        showHash( 'resident', 'resident-graph' );
+        showHash( 'explicit', 'explicit-graph' );
+    };
   </script>
  </body>
 </html>
