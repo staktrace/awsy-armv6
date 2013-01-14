@@ -109,6 +109,26 @@
             }
         }
     };
+
+    function showDetail( metric, divId, label, index ) {
+        var detailHtml = '';
+        if (label && index) {
+            detailHtml = '<table><tr><th colspan="3">data series: ' + label + '</th></tr><tr><th>timestamp</th><th>' + metric + '</th><th>changeset</th></tr>';
+            var detailData = document.getElementById( divId )._detailData[label][index];
+            var lastCset = null;
+            for (var i = 0; i < detailData.length; i++) {
+                var cset = detailData[i][2].substring(detailData[i][2].lastIndexOf('/') + 1);
+                var link = (lastCset != null)
+                    ? 'https://hg.mozilla.org/integration/mozilla-inbound/pushloghtml?fromchange=' + lastCset + '&tochange=' + cset
+                    : 'https://hg.mozilla.org/integration/mozilla-inbound/rev/' + cset;
+                lastCset = cset;
+                detailHtml += '<tr><td>' + detailData[i][0] + '</td><td>' + detailData[i][1] + '</td><td><a href="' + link + '">' + cset + '</a></td></tr>';
+            }
+            detailHtml += '</table>';
+        }
+        document.getElementById( metric + '-detail' ).innerHTML = detailHtml;
+    }
+
     function load( metric ) {
         var divId = metric + "-graph";
         document.getElementById( divId )._detailData = new Array();
@@ -120,22 +140,18 @@
                 if (this.status == 200 && (data = JSON.parse( this.responseText ))) {
                     $.plot( $( '#' + divId ), data, options );
                     $( '#' + divId ).bind( "plotclick", function (event, pos, item) {
-                        var detailHtml = '<table><tr><th>timestamp</th><th>' + metric + '</th><th>changeset</th></tr>';
-                        if (item) {
-                            var detailData = document.getElementById( divId )._detailData[item.series.label][item.dataIndex];
-                            var lastCset = null;
-                            for (var i = 0; i < detailData.length; i++) {
-                                var cset = detailData[i][2].substring(detailData[i][2].lastIndexOf('/') + 1);
-                                var link = (lastCset != null)
-                                    ? 'https://hg.mozilla.org/integration/mozilla-inbound/pushloghtml?fromchange=' + lastCset + '&tochange=' + cset
-                                    : 'https://hg.mozilla.org/integration/mozilla-inbound/rev/' + cset;
-                                lastCset = cset;
-                                detailHtml += '<tr><td>' + detailData[i][0] + '</td><td>' + detailData[i][1] + '</td><td><a href="' + link + '">' + cset + '</a></td></tr>';
-                            }
-                        }
-                        detailHtml += '</table>';
-                        document.getElementById( metric + '-detail' ).innerHTML = detailHtml;
+                        showDetail( metric, divId, item ? item.series.label : null, item ? item.dataIndex : null );
                     } );
+
+                    if (window.location.hash) {
+                        var params = window.location.hash.substring(1).split(',');
+                        var args = new Array();
+                        for (var i = 0; i < params.length; i++) {
+                            params[i] = params[i].split('=');
+                            args[params[i][0]] = params[i][1];
+                        }
+                        showDetail( metric, divId, args["which"], args["when"] );
+                    }
                 } else {
                     document.getElementById( divId ).innerHTML = 'Error fetching graph data :(';
                 }
