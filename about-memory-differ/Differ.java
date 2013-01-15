@@ -116,6 +116,9 @@ public class Differ {
         }
 
         public int compareTo( DiffEntry other ) {
+            if (other._delta == this._delta) {
+                return _path.compareTo( other._path );
+            }
             return (int)(other._delta - this._delta);
         }
     }
