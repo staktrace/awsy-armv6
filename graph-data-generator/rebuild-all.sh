@@ -7,6 +7,7 @@ for i in ../data/*; do
     fi
     TIMESTAMP=$(head -1 $i/fennec-*-armv6.txt)
     HGCSET=$(tail -1 $i/fennec-*-armv6.txt)
+    HGCSET=${HGCSET##*/}
     cat $i/memory-summary.json |
     for j in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
         read resident

@@ -117,7 +117,7 @@
             var detailData = document.getElementById( divId )._detailData[label][index];
             var lastCset = null;
             for (var i = 0; i < detailData.length; i++) {
-                var cset = detailData[i][2].substring(detailData[i][2].lastIndexOf('/') + 1);
+                var cset = detailData[i][2];
                 var link = (lastCset != null)
                     ? 'https://hg.mozilla.org/integration/mozilla-inbound/pushloghtml?fromchange=' + lastCset + '&tochange=' + cset
                     : 'https://hg.mozilla.org/integration/mozilla-inbound/rev/' + cset;
