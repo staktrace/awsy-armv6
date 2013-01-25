@@ -7,5 +7,5 @@ for i in ../data/*; do
     fi
     PID=${PID##*-}
     PID=${PID%%.*}
-    ./rebuild-sql.sh $i $PID
+    ./rebuild-final.sh $i $PID
 done
