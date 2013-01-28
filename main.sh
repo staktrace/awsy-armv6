@@ -5,6 +5,7 @@ if [ $? -eq 0 ]; then
     for ((i = 1; i <= 5; i++)); do
         ./run-build.sh $BUILD
         if [ $? -eq 0 ]; then
+            pushd awsy-data-generator && ./upload.sh $BUILD && popd
             exit 0;
         fi
         echo "Running the build at $BUILD failed; saving logs to $BUILD/failed-$i and trying again..."
