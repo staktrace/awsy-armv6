@@ -18,7 +18,7 @@ if [ ! -f "pushlog.json" ]; then
 fi
 
 PUSHTIME=$(cat pushlog.json | grep "date" | tr -d -c '0123456789')
-FULLCSET=$(cat pushlog.json | grep -A 1 "changesets" | tail -1 | tr -d -c '0123456789abcdefABCDEF')
+FULLCSET=$(cat pushlog.json | grep -B 1 "]" | head -1 | tr -d -c '0123456789abcdefABCDEF')
 TESTTIME=$(stat -c %Y memory-report-TabsClosedForceGC-$PID.json.gz)
 TESTNAME="Android-ARMv6"
 
