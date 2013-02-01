@@ -12,3 +12,7 @@ $SDK_TOOLS/dx --dex --output=device-forwarder.jar *.class
 jar cf host-forwarder.jar *.class
 rm *.class
 popd >/dev/null
+
+pushd awsy-data-generator >/dev/null
+javac -cp sts_util.jar *.java
+popd >/dev/null
