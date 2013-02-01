@@ -30,6 +30,10 @@ public class Differ {
         }
     }
 
+    private String sanitize( String path ) {
+        return path.replaceAll( "0x\\p{XDigit}+", "0xSTRIPPED" );
+    }
+
     private Map<String, Long> toMap( JsonObject memDump ) {
         Map<String, Long> map = new TreeMap<String, Long>();
         JsonArray reports = (JsonArray)memDump.getValue( "reports" );
@@ -38,7 +42,7 @@ public class Differ {
             if (( (BigInteger)report.getValue( "units" ) ).intValue() != 0) {
                 continue;
             }
-            String path = (String)report.getValue( "path" );
+            String path = sanitize( (String)report.getValue( "path" ) );
             long value = ( (BigInteger)report.getValue( "amount" ) ).longValue();
             add( map, path, value );
             while (path.lastIndexOf( '/' ) >= 0) {
