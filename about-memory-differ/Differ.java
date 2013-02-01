@@ -35,6 +35,9 @@ public class Differ {
         JsonArray reports = (JsonArray)memDump.getValue( "reports" );
         for (int i = reports.size() - 1; i >= 0; i--) {
             JsonObject report = (JsonObject)reports.getValue( i );
+            if (( (BigInteger)report.getValue( "units" ) ).intValue() != 0) {
+                continue;
+            }
             String path = (String)report.getValue( "path" );
             long value = ( (BigInteger)report.getValue( "amount" ) ).longValue();
             add( map, path, value );
