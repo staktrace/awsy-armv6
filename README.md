@@ -62,6 +62,9 @@ This will automatically do the following:
 * set up the TCP port forwarding over USB from device to host
 * run fennec and let the add-on load the test pages
 * dump the logs into awsy-armv6/data/<buildid>
+* delete the downloaded APK (to save space)
+* upload the results to areweslimyet.com (assuming you can SSH to albus.mv.mozilla.com)
+* re-try all of the above up to 4 additional times if for whatever reason the test fails to run to completion; data from failed runs is saved in failed-<n> subfolders in the data folder
 
 If you want to run a pre-downloaded build, you can skip the download step and run:
 
