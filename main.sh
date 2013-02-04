@@ -6,7 +6,9 @@ if [ $? -eq 0 ]; then
         ./run-build.sh $BUILD
         if [ $? -eq 0 ]; then
             rm $BUILD/fennec-*-armv6.apk
-            pushd awsy-data-generator && ./upload.sh $BUILD && popd
+            pushd awsy-data-generator >/dev/null
+            ./upload.sh $BUILD
+            popd >/dev/null
             exit 0;
         fi
         echo "Running the build at $BUILD failed; saving logs to $BUILD/failed-$i and trying again..."

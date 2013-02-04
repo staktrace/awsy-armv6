@@ -11,6 +11,9 @@ fi
 PID=${PID##*-}
 PID=${PID%%.*}
 ./rebuild-final.sh $BUILD $PID
+if [ $? -ne 0 ]; then
+    exit $?
+fi
 BUILDFOLDER=${BUILD##*/}
 pushd $BUILD >/dev/null
 echo -n "Uploading $BUILDFOLDER to albus... "

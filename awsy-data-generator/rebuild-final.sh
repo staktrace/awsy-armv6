@@ -22,6 +22,11 @@ FULLCSET=$(cat pushlog.json | grep -B 1 "]" | head -1 | tr -d -c '0123456789abcd
 TESTTIME=$(stat -c %Y memory-report-TabsClosedForceGC-$PID.json.gz)
 TESTNAME="Android-ARMv6"
 
+if [ -z "$PUSHTIME" -o -z "$FULLCSET" ]; then
+    echo "Error! Unable to extract PUSHTIME or FULLCSET from pushlog.json!"
+    exit 1
+fi
+
 printf 'buildname\n%s\nbuildtime\n%s\ntestname\n%s\ntesttime\n%s\n' "$FULLCSET" "$PUSHTIME" "$TESTNAME" "$TESTTIME" > awsy.final
 
 for i in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
