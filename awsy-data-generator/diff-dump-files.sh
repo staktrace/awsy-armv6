@@ -4,8 +4,8 @@ USAGE="$0 <before-dump-file> <after-dump-file>"
 BEFORE=${1?$USAGE}
 AFTER=${2?$USAGE}
 
-BEFORE_PLAIN=$(mktemp)
-AFTER_PLAIN=$(mktemp)
+BEFORE_PLAIN=$(mktemp dumpXXXX)
+AFTER_PLAIN=$(mktemp dumpXXXX)
 (zcat $BEFORE 2>/dev/null || cat $BEFORE) > $BEFORE_PLAIN
 (zcat $AFTER 2>/dev/null || cat $AFTER) > $AFTER_PLAIN
 
