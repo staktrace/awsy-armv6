@@ -12,7 +12,9 @@ public class Dumper {
     private final Map<String, Long> _data;
 
     Dumper( Reader in ) throws Exception {
-        _data = toMap( new JsonReader( in ).readObject() );
+        JsonObject data = new JsonReader( in ).readObject();
+        _data = toMap( data );
+        _data.put( "explicit/heap-unclassified", calculateHeapUnclassified( data ) );
     }
 
     private void add( Map<String, Long> map, String path, long value ) {
@@ -37,6 +39,22 @@ public class Dumper {
             add( map, path, value );
         }
         return map;
+    }
+
+    private long calculateHeapUnclassified( JsonObject memDump ) {
+        long knownHeap = 0;
+        JsonArray reports = (JsonArray)memDump.getValue( "reports" );
+        for (int i = reports.size() - 1; i >= 0; i--) {
+            JsonObject report = (JsonObject)reports.getValue( i );
+            String path = (String)report.getValue( "path" );
+            if (path.startsWith( "explicit/" )
+                && ( (BigInteger)report.getValue( "units" ) ).intValue() == 0
+                && ( (BigInteger)report.getValue( "kind" ) ).intValue() == 1)
+            {
+                knownHeap += _data.get( path );
+            }
+        }
+        return _data.get( "heap-allocated" ) - knownHeap;
     }
 
     public void dumpData( String prefix ) {
