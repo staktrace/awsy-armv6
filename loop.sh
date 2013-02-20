@@ -2,8 +2,17 @@
 
 while true; do
     ./main.sh
-    if [ $? -eq 2 ]; then
-        sleep 300;
-    fi
+    case $? in
+        0)  # this build succeeded, keep going
+            ;;
+        1)  # this build failed, but keep going
+            ;;
+        2)  # unable to recover from reboot. abort
+            exit
+            ;;
+        3)  # no new builds found, sleep for a bit
+            sleep 300
+            ;;
+    esac
 done
 

@@ -9,6 +9,7 @@ export ROOT=$HOME/awsy-armv6
 export ANDROID_SERIAL=B7510361ef029
 
 FAILED=1
+REBOOTED=0
 ls fennec-*-armv6.apk
 if [ $? -eq 0 ]; then
     echo "Setting up device with Fennec..."
@@ -45,6 +46,7 @@ if [ $? -eq 0 ]; then
         grep "Entered the Android system server" device.log
         if [ $? -eq 0 ]; then
             echo "The device may have rebooted during test!"
+            REBOOTED=1
             break
         fi
         NOW=$(date +%s)
@@ -62,6 +64,13 @@ if [ $? -eq 0 ]; then
     adb shell dumpsys > dumpsys-end.log
     adb pull /data/data/org.mozilla.fennec/app_tmp/
     adb shell "rm /data/data/org.mozilla.fennec/app_tmp/*"
+
+    if [ $REBOOTED -eq 1 ]; then
+        ./reboot-recover.sh
+        if [ $? -ne 0 ]; then
+            FAILED=2
+        fi
+    fi
 else
     echo "Unable to find APK file; check $DIR/ for errors"
 fi
