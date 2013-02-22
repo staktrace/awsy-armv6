@@ -66,10 +66,12 @@ if [ $? -eq 0 ]; then
     adb shell "rm /data/data/org.mozilla.fennec/app_tmp/*"
 
     if [ $REBOOTED -eq 1 ]; then
+        popd >/dev/null
         ./reboot-recover.sh
         if [ $? -ne 0 ]; then
             FAILED=2
         fi
+        pushd $DIR >/dev/null
     fi
 else
     echo "Unable to find APK file; check $DIR/ for errors"
