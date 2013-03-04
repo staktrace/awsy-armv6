@@ -51,7 +51,7 @@ public class Dumper {
                 && ( (BigInteger)report.getValue( "units" ) ).intValue() == 0
                 && ( (BigInteger)report.getValue( "kind" ) ).intValue() == 1)
             {
-                knownHeap += _data.get( path );
+                knownHeap += ( (BigInteger)report.getValue( "amount" ) ).longValue();
             }
         }
         return _data.get( "heap-allocated" ) - knownHeap;
