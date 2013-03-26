@@ -6,7 +6,7 @@ echo "Running test build at $DIR/"
 pushd $DIR >/dev/null
 
 export ROOT=$HOME/awsy-armv6
-export ANDROID_SERIAL=B7510361ef029
+export ANDROID_SERIAL=01466E640801401C
 
 FAILED=1
 REBOOTED=0
@@ -18,7 +18,7 @@ if [ $? -eq 0 ]; then
     adb forward tcp:8000 tcp:8000
     adb uninstall org.mozilla.fennec
     adb install *.apk
-    adb shell "echo 'cd /data/data/org.mozilla.fennec && busybox tar xzf /sdcard/profile.tgz' | su"
+    adb shell "echo 'cd /data/data/org.mozilla.fennec && tar xZf /sdcard/profile.tgz' | su"
     echo "Setting up port forwarding..."
     adb shell "echo 'dalvikvm -cp /sdcard/device-forwarder.jar Main -device 8000 25' | su" > device-forwarder.log 2>&1 &
     sleep 1
@@ -56,7 +56,7 @@ if [ $? -eq 0 ]; then
         fi
     done
     echo "Shutting down..."
-    adb shell "echo 'busybox pkill org.mozilla.fennec' | su"
+    adb shell "su -c pkill org.mozilla.fennec"
     sleep 2
     kill $PID_FORWARDER
     kill $PID_LOGCAT

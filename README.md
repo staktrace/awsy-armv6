@@ -27,7 +27,7 @@ Device setup:
 Assumptions:
 * you have cloned https://github.com/staktrace/awsy-armv6 to $HOME/awsy-armv6. If this is not the case, update $ROOT in pick-build.sh and run-build.sh
 * your android SDK platform-tools folder is at $HOME/android/sdk/platform-tools. If this is not the case, update $SDK_TOOLS in build.sh
-* your android device has a serial number of B7510361ef029. If this is not the case, update $ANDROID_SERIAL in run-build.sh
+* your android device has a serial number of 01466E640801401C. If this is not the case, update $ANDROID_SERIAL in run-build.sh
 * your android device is rooted such that "su" gets you a root shell, and busybox is installed and accessible from the root shell. If this is not the case, make it so.
 * you have javac (>= 1.6), jar, zip, links, wget, and adb on your $PATH. If not, add them.
 
@@ -39,9 +39,9 @@ Once the above assumptions are satisified, enter the awsy-armv6 folder and run:
     
     # install a clean build of org.mozilla.fennec (picking a recent build at the time of this writing, update as needed):
     adb uninstall org.mozilla.fennec
-    wget http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/mozilla-inbound-android-armv6/1351691991/fennec-19.0a1.en-US.android-arm-armv6.apk
-    adb install fennec-19.0a1.en-US.android-arm-armv6.apk
-    rm fennec-19.0a1.en-US.android-arm-armv6.apk
+    wget http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/mozilla-inbound-android-armv6/1361917567/fennec-22.0a1.en-US.android-arm-armv6.apk
+    adb install fennec-22.0a1.en-US.android-arm-armv6.apk
+    rm fennec-22.0a1.en-US.android-arm-armv6.apk
 
     # start fennec, and install the add-on from /sdcard/awsy.xpi (manual approval on-device needed here).
     # note that you may also get a telemetry prompt, feel free to accept that.
@@ -49,7 +49,7 @@ Once the above assumptions are satisified, enter the awsy-armv6 folder and run:
     # quit fennec QUICKLY after this (within 30 seconds, or the add-on will start loading pages and dirty your profile).
 
     # make a backup of the "clean" profile (everything in /data/data/org.mozilla.fennec except libs/):
-    adb shell "echo 'rm /sdcard/profile.tgz; cd /data/data/org.mozilla.fennec && busybox tar czf /sdcard/profile.tgz files shared_prefs app_plugins app_tmp cache res databases' | su"
+    adb shell "echo 'rm /sdcard/profile.tgz; cd /data/data/org.mozilla.fennec && tar cZf /sdcard/profile.tgz cache files shared_prefs app_plugins app_tmp res' | su"
 
 Part 2: RUNNING
 ===============
