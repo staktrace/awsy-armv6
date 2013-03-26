@@ -64,6 +64,8 @@ if [ $? -eq 0 ]; then
     adb shell dumpsys > dumpsys-end.log
     adb pull /data/data/org.mozilla.fennec/app_tmp/
     adb shell "rm /data/data/org.mozilla.fennec/app_tmp/*"
+    adb pull /sdcard/download/
+    adb shell "rm /sdcard/download/*"
 
     if [ $REBOOTED -eq 1 ]; then
         popd >/dev/null
