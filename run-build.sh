@@ -60,8 +60,9 @@ if [ $? -eq 0 ]; then
     kill $PID_LOGCAT
     sleep 2
     adb shell dumpsys > dumpsys-end.log
-    adb pull /data/data/org.mozilla.fennec/app_tmp/
-    adb shell "rm /data/data/org.mozilla.fennec/app_tmp/*"
+    # As of http://hg.mozilla.org/integration/mozilla-inbound/rev/36b60ec153af the data files are dumped to the SD card
+    # adb pull /data/data/org.mozilla.fennec/app_tmp/
+    # adb shell "rm /data/data/org.mozilla.fennec/app_tmp/*"
     adb pull /sdcard/download/
     adb shell "rm /sdcard/download/*"
 else
