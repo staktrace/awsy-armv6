@@ -16,6 +16,6 @@ if [ $? -ne 0 ]; then
 fi
 BUILDFOLDER=${BUILD##*/}
 pushd $BUILD >/dev/null
-echo -n "Uploading $BUILDFOLDER to albus... "
-cp awsy.final.gz $BUILDFOLDER.gz && scp $BUILDFOLDER.gz johns@albus.mv.mozilla.com:mobile && rm $BUILDFOLDER.gz && echo "Success!"
+echo -n "Uploading $BUILDFOLDER to arcus... "
+cp awsy.final.gz $BUILDFOLDER.gz && scp $BUILDFOLDER.gz johns@arcus.mv.mozilla.com:/media/awsy/mobile && rm $BUILDFOLDER.gz && echo "Success!"
 popd >/dev/null
