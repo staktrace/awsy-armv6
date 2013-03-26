@@ -17,7 +17,7 @@ if [ $? -eq 0 ]; then
     adb forward tcp:8000 tcp:8000
     adb uninstall org.mozilla.fennec
     adb install *.apk
-    adb shell "echo 'cd /data/data/org.mozilla.fennec && tar xZf /sdcard/profile.tgz' | su"
+    adb shell "echo 'cd /data/data/org.mozilla.fennec && tar xf /sdcard/profile.tar' | su"
     echo "Setting up port forwarding..."
     adb shell "echo 'dalvikvm -cp /sdcard/device-forwarder.jar Main -device 8000 25' | su" > device-forwarder.log 2>&1 &
     sleep 1
