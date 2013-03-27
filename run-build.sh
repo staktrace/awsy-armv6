@@ -24,7 +24,7 @@ if [ $? -eq 0 ]; then
     java -cp $ROOT/forwarder/host-forwarder.jar Main -host 8000 25 > host-forwarder.log 2>&1 &
     PID_FORWARDER=$!
     sleep 5
-    ABORT_TIME=$(($(date +%s) + 900)) # give it 15 minutes
+    ABORT_TIME=$(($(date +%s) + 600)) # give it 10 minutes
     echo "Starting fennec and running test..."
     adb shell am start -n org.mozilla.fennec/.App
     adb logcat -v time > device.log &
