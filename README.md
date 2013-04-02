@@ -54,7 +54,7 @@ Once the above assumptions are satisified, enter the awsy-armv6 folder and run:
 Part 2: RUNNING
 ===============
 
-    ./main.sh
+    ./run-next-inbound-build.sh
 
 This will automatically do the following:
 * download an appropriate build to test (if you have tested a build before, it will fetch the next sequential build, otherwise it will fetch the latest inbound build)
