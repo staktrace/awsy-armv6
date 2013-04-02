@@ -32,7 +32,7 @@ public class Differ {
 
     private String sanitize( String path ) {
         return path.replaceAll( "0x\\p{XDigit}+", "0xSTRIPPED" )
-                   .replaceAll( "js-zone\\(\\p{XDigit}+\\)", "js-zone(STRIPPED)" );
+                   .replaceAll( "zone\\(\\p{XDigit}+\\)", "zone(STRIPPED)" );
     }
 
     private Map<String, Long> toMap( JsonObject memDump ) {
