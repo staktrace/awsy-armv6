@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-export STAGE="http://stage.mozilla.org/pub/mozilla.org/firefox/try-builds"
-export STAGE_POSTFIX="try-android-armv6/"
+export STAGE="http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/mozilla-inbound-android-armv6"
+export STAGE_POSTFIX=""
 export ROOT=$HOME/awsy-armv6/try-data
 export UPLOAD_AWSY_RESULTS=0
 
-BUILDID=${1?"Usage: $0 <try-build-id> # try build id is in form of user@host.tld-csethash"}
+BUILDID=${1?"Usage: $0 <inbound-build-id> # inbound build id is a timestamp"}
 COUNT=${2:-1}
 
 for ((i = 0; i < $COUNT; i++)); do
