@@ -12,6 +12,7 @@ if [[ -d $ROOT/$BUILDID ]]; then
     echo "$ROOT/$BUILDID"
     exit 0;
 fi
+
 mkdir -p "$ROOT/$BUILDID"
 pushd $ROOT/$BUILDID >/dev/null 2>&1
 APK=$(links -dump $STAGE/$BUILDID/$STAGE_POSTFIX | grep "fennec-.*-armv6.apk" | awk '{print $3}')

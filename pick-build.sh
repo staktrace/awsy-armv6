@@ -15,8 +15,8 @@ BUILDID=$(links -dump $STAGE/ | grep ' \[DIR\] ' | awk '{ print $2 }' | sed -e "
     tail -n 1)
 
 if [[ -n $BUILDID ]]; then
-    ./fetch-build.sh $BUILDID
-    exit $?
+    echo "$BUILDID"
+    exit 0
 fi
 
 exit 1
