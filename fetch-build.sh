@@ -2,8 +2,8 @@
 
 BUILDID=${1?"Usage: $0 <build-id>"}
 
-if [[ -z "$STAGE" || -z "$ROOT" || -z "$STAGE_POSTFIX" ]]; then
-    echo "One or more of STAGE, ROOT, and STAGE_POSTFIX were not defined." >/dev/stderr
+if [[ -z "$STAGE" || -z "$ROOT" ]]; then
+    echo "One or more of STAGE and ROOT were not defined." >/dev/stderr
     exit 1;
 fi
 
