@@ -57,7 +57,7 @@ Part 2: RUNNING
     ./run-next-inbound-build.sh
 
 This will automatically do the following:
-* download an appropriate build to test (if you have tested a build before, it will fetch the next sequential build, otherwise it will fetch the latest inbound build)
+* download an appropriate build to test (if you have tested a build before, it will fetch the next untested build, otherwise it will fetch the latest inbound build)
 * install the build onto your device and reset the profile to the known clean profile created during setup
 * set up the TCP port forwarding over USB from device to host
 * run fennec and let the add-on load the test pages

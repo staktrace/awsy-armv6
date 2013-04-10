@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-export PICKLAST=1
-export BUILDID=
+export MATCHED=0
 BUILDID=$(links -dump $STAGE/ | grep ' \[DIR\] ' | awk '{ print $2 }' | sed -e "s#/##" | sort -n |
     while read buildstamp; do
         if [[ -d $ROOT/$buildstamp ]]; then
-            BUILDID=
-            PICKLAST=0
-        elif [[ -z $BUILDID || $PICKLAST -eq 1 ]]; then
-            BUILDID=$buildstamp
+            MATCHED=1
+        elif [[ $MATCHED -eq 1 ]]; then
+            echo $buildstamp
+            exit
+        else
+            echo $buildstamp
         fi
-        echo "$BUILDID"
     done |
     tail -n 1)
 
