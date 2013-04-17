@@ -5,8 +5,8 @@ export STAGE_POSTFIX="try-android-armv6/"
 export ROOT=$HOME/awsy-armv6/try-data
 export UPLOAD_AWSY_RESULTS=0
 
-BUILDID=${1?"Usage: $0 <try-build-id> # try build id is in form of user@host.tld-csethash"}
-COUNT=${2:-1}
+BUILDID=${1?"Usage: $0 <try-build-id> [count] # try build id is in form of user@host.tld-csethash; count defaults to 5"}
+COUNT=${2:-5}
 
 for ((i = 0; i < $COUNT; i++)); do
     ./fetch-and-run.sh $BUILDID

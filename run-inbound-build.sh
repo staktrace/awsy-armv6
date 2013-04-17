@@ -5,8 +5,8 @@ export STAGE_POSTFIX=""
 export ROOT=$HOME/awsy-armv6/try-data
 export UPLOAD_AWSY_RESULTS=0
 
-BUILDID=${1?"Usage: $0 <inbound-build-id> # inbound build id is a timestamp"}
-COUNT=${2:-1}
+BUILDID=${1?"Usage: $0 <inbound-build-id> [count] # inbound build id is a timestamp; count defaults to 5"}
+COUNT=${2:-5}
 
 for ((i = 0; i < $COUNT; i++)); do
     ./fetch-and-run.sh $BUILDID
