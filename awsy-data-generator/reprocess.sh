@@ -14,11 +14,11 @@ if [ ! -f $BUILD/awsy.final.gz ]; then
 fi
 
 # test if we should re-process this file
-zgrep 'heap-unclassified' $BUILD/awsy.final.gz
-if [ $? -eq 0 ]; then
-    echo "Found a awsy.final.gz with heap-unclassified; exiting..."
-    exit 1
-fi
+# zgrep 'heap-unclassified' $BUILD/awsy.final.gz
+# if [ $? -eq 0 ]; then
+#     echo "Found a awsy.final.gz with heap-unclassified; exiting..."
+#     exit 1
+# fi
 
 rm $BUILD/awsy.final.gz
 
@@ -34,5 +34,5 @@ echo -n "Uploading $BUILDFOLDER to albus... "
 echo "mode" > $BUILDFOLDER
 echo "replace" >> $BUILDFOLDER
 zcat awsy.final.gz >> $BUILDFOLDER
-gzip $BUILDFOLDER && scp $BUILDFOLDER.gz johns@albus.mv.mozilla.com:mobile && rm $BUILDFOLDER.gz && echo "Success!"
+gzip $BUILDFOLDER && scp $BUILDFOLDER.gz johns@arcus.mv.mozilla.com:/media/awsy/mobile && rm $BUILDFOLDER.gz && echo "Success!"
 popd >/dev/null
