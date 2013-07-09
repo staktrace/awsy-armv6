@@ -63,8 +63,8 @@ if [ $? -eq 0 ]; then
     # As of http://hg.mozilla.org/integration/mozilla-inbound/rev/36b60ec153af the data files are dumped to the SD card
     # adb pull /data/data/org.mozilla.fennec/app_tmp/
     # adb shell "rm /data/data/org.mozilla.fennec/app_tmp/*"
-    adb pull /sdcard/download/
-    adb shell "rm /sdcard/download/*"
+    adb pull /sdcard/download/memory-reports/
+    adb shell "rm /sdcard/download/memory-reports/*"
 else
     echo "Unable to find APK file; check $DIR/ for errors"
 fi
