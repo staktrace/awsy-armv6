@@ -4,7 +4,7 @@ BUILDID=${1?"Usage: $0 <build-id>"}
 
 BUILD=$(./fetch-build.sh $BUILDID)
 if [ $? -eq 0 ]; then
-    for ((i = 1; i <= 5; i++)); do
+    for ((i = 1; i <= 3; i++)); do
         ./run-build.sh $BUILD
         RESULT=$?
         if [ $RESULT -eq 0 ]; then
@@ -26,7 +26,7 @@ if [ $? -eq 0 ]; then
         echo "Trying again..."
         sleep 5
     done
-    echo "Unable to run the build $BUILD successfully after 5 attempts; giving up!"
+    echo "Unable to run the build $BUILD successfully after 3 attempts; giving up!"
     rm $BUILD/fennec-*-armv6.apk
     exit 1
 else
