@@ -34,5 +34,5 @@ echo -n "Uploading $BUILDFOLDER to albus... "
 echo "mode" > $BUILDFOLDER
 echo "replace" >> $BUILDFOLDER
 zcat awsy.final.gz >> $BUILDFOLDER
-gzip $BUILDFOLDER && scp $BUILDFOLDER.gz johns@arcus.mv.mozilla.com:/media/awsy/mobile && rm $BUILDFOLDER.gz && echo "Success!"
+gzip $BUILDFOLDER && scp $BUILDFOLDER.gz johns@arcus:/media/awsy/mobile && rm $BUILDFOLDER.gz && echo "Success!"
 popd >/dev/null
