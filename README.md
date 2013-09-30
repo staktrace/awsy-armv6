@@ -6,16 +6,16 @@ Nginx/TP5 setup:
 
     mkdir $HOME/nginx/
     pushd $HOME/nginx/
-    wget http://nginx.org/download/nginx-1.2.3.tar.gz
-    tar xzf nginx-1.2.3.tar.gz
-    cd nginx-1.2.3
-    ./configure --prefix=$HOME/nginx/install --without-http-rewrite-module  # without HTTP rewrite module because I didn't have PCRE installed and didn't want to bother
+    wget http://nginx.org/download/nginx-1.5.5.tar.gz
+    tar xzf nginx-1.5.5.tar.gz
+    cd nginx-1.5.5
+    ./configure --prefix=$HOME/nginx/install
     make
     make install
     cd ../install/conf
     vim nginx.conf # edit the "listen 80;" to be "listen 8001; listen 8002; ... listen 8100;"
     cd ../html/
-    wget http://build.mozilla.org/talos/zips/tp5.zip
+    wget http://build.mozilla.org/talos/zips/tp5.zip    # or http://people.mozilla.org/~jmaher/taloszips/zips/tp5n.zip, but then mv tp5n to tp5 after unzipping
     unzip tp5.zip
     cd ../sbin
     ./nginx
