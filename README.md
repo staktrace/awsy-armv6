@@ -29,7 +29,7 @@ Assumptions:
 * your android SDK platform-tools folder is at $HOME/android/sdk/platform-tools. If this is not the case, update $SDK_TOOLS in build.sh
 * your android device has a serial number of 01466E640801401C. If this is not the case, update $ANDROID_SERIAL in run-build.sh
 * your android device is rooted such that "su" gets you a root shell, and busybox is installed and accessible from the root shell. If this is not the case, make it so.
-* you have javac (>= 1.6), jar, zip, links, wget, and adb on your $PATH. If not, add them.
+* you have javac (>= 1.6), jar, zip, links, wget, curl, and adb on your $PATH. If not, add them.
 
 Once the above assumptions are satisified, enter the awsy-armv6 folder and run:
 
