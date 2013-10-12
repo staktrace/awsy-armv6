@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 while true; do
-    ./run-next-inbound-build.sh
+    ./run-next-integration-build.sh
     case $? in
         0)  # this build succeeded, keep going
             ;;

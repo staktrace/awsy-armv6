@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-STAGE=${STAGE-"http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/mozilla-inbound-android-armv6"}
-ROOT=${ROOT-"$HOME/awsy-armv6/data"}
+if [[ -z "$STAGE" || -z "$ROOT" ]]; then
+    echo "One or more of STAGE and ROOT were not defined." >/dev/stderr
+    exit 1;
+fi
 
 export MATCHED=0
 BUILDID=$(links -dump $STAGE/ | grep ' \[DIR\] ' | awk '{ print $2 }' | sed -e "s#/##" | sort -n |
