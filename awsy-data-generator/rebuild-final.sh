@@ -30,7 +30,7 @@ fi
 printf 'buildname\n%s\nbuildtime\n%s\ntestname\n%s\ntesttime\n%s\n' "$FULLCSET" "$PUSHTIME" "$TESTNAME" "$TESTTIME" > awsy.final
 
 for i in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
-    zcat memory-report-$i-$PID.json.gz | java -cp ../../awsy-data-generator:../../awsy-data-generator/sts_util.jar Dumper "Iteration 1/$i/" >> awsy.final
+    zcat memory-report-$i-$PID.json.gz | java -cp ../../../awsy-data-generator:../../../awsy-data-generator/sts_util.jar Dumper "Iteration 1/$i/" >> awsy.final
 done
 
 gzip awsy.final
