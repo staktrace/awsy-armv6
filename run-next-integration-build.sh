@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-for tree in mozilla-inbound b2g-inbound fx-team; do
+for tree in mozilla-inbound fx-team b2g-inbound; do
     export STAGE="http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/$tree-android-armv6"
     export STAGE_POSTFIX=""
     export ROOT=$HOME/awsy-armv6/data/$tree
