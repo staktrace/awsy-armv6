@@ -14,11 +14,13 @@ if [ ! -f $BUILD/awsy.final.gz ]; then
 fi
 
 # test if we should re-process this file
-# zgrep 'heap-unclassified' $BUILD/awsy.final.gz
-# if [ $? -eq 0 ]; then
-#     echo "Found a awsy.final.gz with heap-unclassified; exiting..."
-#     exit 1
-# fi
+zgrep 'heap-unclassified' $BUILD/awsy.final.gz
+if [ $? -eq 0 ]; then
+    echo "Found a awsy.final.gz with heap-unclassified; exiting..."
+    exit 1
+fi
+
+echo "Reprocessing $BUILD..."
 
 rm $BUILD/awsy.final.gz
 
@@ -30,7 +32,7 @@ if [ $? -ne 0 ]; then
 fi
 BUILDFOLDER=${BUILD##*/}
 pushd $BUILD >/dev/null
-echo -n "Uploading $BUILDFOLDER to albus... "
+echo -n "Uploading $BUILDFOLDER to arcus..."
 echo "mode" > $BUILDFOLDER
 echo "replace" >> $BUILDFOLDER
 zcat awsy.final.gz >> $BUILDFOLDER
