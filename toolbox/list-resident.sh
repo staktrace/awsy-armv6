@@ -5,7 +5,7 @@ LINE=${2?$USAGE}
 COUNT=${COUNT:-40}
 
 for i in $(ls | grep -A $COUNT $START); do
-    if [ -f $i/awsy.final.gz ]; then
+    if [ -f $i/memory-report-$LINE-*.gz ]; then
         if [[ -n "$SHOWFOLDER" && $SHOWFOLDER -eq 1 ]]; then
             echo -n "$i "
         fi
