@@ -39,9 +39,9 @@ Once the above assumptions are satisified, enter the awsy-armv6 folder and run:
     
     # install a clean build of org.mozilla.fennec (picking a recent build at the time of this writing, update as needed):
     adb uninstall org.mozilla.fennec
-    wget http://ftp.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/mozilla-inbound-android-armv6/1377823780/fennec-26.0a1.en-US.android-arm-armv6.apk
-    adb install fennec-26.0a1.en-US.android-arm-armv6.apk
-    rm fennec-26.0a1.en-US.android-arm-armv6.apk
+    wget http://ftp.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/mozilla-inbound-android-armv6/1392144799/fennec-30.0a1.en-US.android-arm-armv6.apk
+    adb install fennec-30.0a1.en-US.android-arm-armv6.apk
+    rm fennec-30.0a1.en-US.android-arm-armv6.apk
 
     # start fennec, and install the add-on from /sdcard/awsy.xpi (manual approval on-device needed here).
     # note that you may also get a telemetry prompt, feel free to accept that.
