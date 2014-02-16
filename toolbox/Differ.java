@@ -1,15 +1,11 @@
 import java.io.FileReader;
 import java.io.Reader;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.TreeMap;
 
-import com.staktrace.util.conv.json.JsonArray;
-import com.staktrace.util.conv.json.JsonObject;
 import com.staktrace.util.conv.json.JsonReader;
 
 public class Differ {
@@ -17,41 +13,8 @@ public class Differ {
     private final Map<String, Long> _modified;
 
     Differ( Reader base, Reader modified ) throws Exception {
-        _base = toMap( new JsonReader( base ).readObject() );
-        _modified = toMap( new JsonReader( modified ).readObject() );
-    }
-
-    private void add( Map<String, Long> map, String path, long value ) {
-        Long old = map.get( path );
-        if (old == null) {
-            map.put( path, value );
-        } else {
-            map.put( path, value + old );
-        }
-    }
-
-    private String sanitize( String path ) {
-        return path.replaceAll( "0x\\p{XDigit}+", "0xSTRIPPED" )
-                   .replaceAll( "zone\\(\\p{XDigit}+\\)", "zone(STRIPPED)" );
-    }
-
-    private Map<String, Long> toMap( JsonObject memDump ) {
-        Map<String, Long> map = new TreeMap<String, Long>();
-        JsonArray reports = (JsonArray)memDump.getValue( "reports" );
-        for (int i = reports.size() - 1; i >= 0; i--) {
-            JsonObject report = (JsonObject)reports.getValue( i );
-            if (( (BigInteger)report.getValue( "units" ) ).intValue() != 0) {
-                continue;
-            }
-            String path = sanitize( (String)report.getValue( "path" ) );
-            long value = ( (BigInteger)report.getValue( "amount" ) ).longValue();
-            add( map, path, value );
-            while (path.lastIndexOf( '/' ) >= 0) {
-                path = path.substring( 0, path.lastIndexOf( '/' ) );
-                add( map, path, value );
-            }
-        }
-        return map;
+        _base = Parser.toMap( new JsonReader( base ).readObject() );
+        _modified = Parser.toMap( new JsonReader( modified ).readObject() );
     }
 
     public void dumpDiff() {
