@@ -91,6 +91,10 @@ public class Plotter {
 
     public void dumpIndexFile( PrintStream out ) throws Exception {
         out.println( "<!DOCTYPE html><html><head><title>AWSY-ARMv6 plotter results</title></head><body>" );
+        out.println( "<h1>Interesting data graphs:</h1>" );
+        for (String path : _paths) {
+            out.println( "<a href='graph-" + StringHash.hash( path ) + ".png'><img title='" + path.replaceAll( "\'", "&apos;" ) + "' src='thumb-" + StringHash.hash( path ) + ".png'/></a>" );
+        }
         out.println( "<h1>Folders for data points:</h1><ol>" );
         for (int i = 0; i < _values.size(); i++) {
             if (_folders.get( i ) == null) {
@@ -99,11 +103,7 @@ public class Plotter {
                 out.println( "<li><a href='http://areweslimyet.mobi/" + _folders.get( i ) + "/'>" + _folders.get( i ) + "</a></li>" );
             }
         }
-        out.println( "</ol><h1>Interesting data graphs:</h1>" );
-        for (String path : _paths) {
-            out.println( "<a href='graph-" + StringHash.hash( path ) + ".png'><img title='" + path.replaceAll( "\'", "&apos;" ) + "' src='thumb-" + StringHash.hash( path ) + ".png'/></a>" );
-        }
-        out.println( "</body></html>" );
+        out.println( "</ol></body></html>" );
     }
 
     public static void main( String[] args ) throws Exception {
