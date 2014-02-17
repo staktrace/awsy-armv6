@@ -79,7 +79,7 @@ public class Plotter {
     }
 
     public void dumpPlotFile( String dataFile, PrintStream out ) throws Exception {
-        out.println( "set terminal png size 640,480" );
+        out.println( "set terminal png size 800,640" );
         out.println( "set key off" );
         int column = 2;
         for (String path : _paths) {
@@ -99,12 +99,11 @@ public class Plotter {
                 out.println( "<li><a href='http://areweslimyet.mobi/" + _folders.get( i ) + "/'>" + _folders.get( i ) + "</a></li>" );
             }
         }
-        out.println( "</ol><h1>Interesting data graphs:</h1><ul>" );
+        out.println( "</ol><h1>Interesting data graphs:</h1>" );
         for (String path : _paths) {
-            out.println( "<li>" + path + "<br/>" );
-            out.println( "<a href='graph-" + StringHash.hash( path ) + ".png'><img src='thumb-" + StringHash.hash( path ) + ".png' width='80' height='60'/></a></li>" );
+            out.println( "<a href='graph-" + StringHash.hash( path ) + ".png'><img title='" + path.replaceAll( "\'", "&apos;" ) + "' src='thumb-" + StringHash.hash( path ) + ".png'/></a>" );
         }
-        out.println( "</ul></body></html>" );
+        out.println( "</body></html>" );
     }
 
     public static void main( String[] args ) throws Exception {

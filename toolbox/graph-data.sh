@@ -9,7 +9,7 @@ mv table.html table.plot table.data plotter-results
 pushd plotter-results
 gnuplot table.plot
 for i in graph-*.png; do
-    convert $i -resize 80x60 ${i//graph/thumb}
+    convert $i -resize 100x80 ${i//graph/thumb}
 done
 popd
 popd
