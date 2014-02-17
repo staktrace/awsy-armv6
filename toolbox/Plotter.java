@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -15,18 +16,21 @@ import com.staktrace.util.conv.string.StringHash;
 
 public class Plotter {
     private final Set<String> _paths;
+    private final List<String> _folders;
     private final List<Map<String, Long>> _values;
 
     Plotter() {
         _paths = new TreeSet<String>();
+        _folders = new ArrayList<String>();
         _values = new ArrayList<Map<String, Long>>();
     }
 
-    public void loadData( Reader data ) throws Exception {
+    public void loadData( String folder, Reader data ) throws Exception {
         Map<String, Long> values = Parser.toMap( new JsonReader( data ).readObject() );
         for (String path : values.keySet()) {
             _paths.add( path );
         }
+        _folders.add( folder );
         _values.add( values );
     }
 
@@ -75,19 +79,37 @@ public class Plotter {
     }
 
     public void dumpPlotFile( String dataFile, PrintStream out ) throws Exception {
-        out.println( "set terminal png size 600,400" );
+        out.println( "set terminal png size 640,480" );
+        out.println( "set key off" );
         int column = 2;
         for (String path : _paths) {
-            out.println( "set title \"" + path.replace( '"', '\'' ) + "\"" );
-            out.println( "set output 'hash" + StringHash.toLong( path ) + ".png'" );
+            out.println( "set output 'graph-" + StringHash.hash( path ) + ".png'" );
             out.println( "plot '" + dataFile + "' using 1:" + column );
             column++;
         }
     }
 
+    public void dumpIndexFile( PrintStream out ) throws Exception {
+        out.println( "<!DOCTYPE html><html><head><title>AWSY-ARMv6 plotter results</title></head><body>" );
+        out.println( "<h1>Folders for data points:</h1><ol>" );
+        for (int i = 0; i < _values.size(); i++) {
+            if (_folders.get( i ) == null) {
+                out.println( "<li>(unknown)</li>" );
+            } else {
+                out.println( "<li><a href='http://areweslimyet.mobi/" + _folders.get( i ) + "/'>" + _folders.get( i ) + "</a></li>" );
+            }
+        }
+        out.println( "</ol><h1>Interesting data graphs:</h1><ul>" );
+        for (String path : _paths) {
+            out.println( "<li>" + path + "<br/>" );
+            out.println( "<a href='graph-" + StringHash.hash( path ) + ".png'><img src='thumb-" + StringHash.hash( path ) + ".png' width='80' height='60'/></a></li>" );
+        }
+        out.println( "</ul></body></html>" );
+    }
+
     public static void main( String[] args ) throws Exception {
         if (args.length == 0) {
-            System.err.println( "Usage: java Plotter <file1.json[.gz]> [<file2.json[.gz]> [...]]" );
+            System.err.println( "Usage: java Plotter <folder>/<file1.json[.gz]> [<folder>/<file2.json[.gz]> [...]]" );
             return;
         }
 
@@ -99,7 +121,7 @@ public class Plotter {
             } else {
                 fr = new FileReader( arg );
             }
-            t.loadData( fr );
+            t.loadData( new File( arg ).getParent(), fr );
             fr.close();
         }
         t.sanitize();
@@ -108,6 +130,9 @@ public class Plotter {
         ps.close();
         ps = new PrintStream( "table.plot" );
         t.dumpPlotFile( "table.data", ps );
+        ps.close();
+        ps = new PrintStream( "table.html" );
+        t.dumpIndexFile( ps );
         ps.close();
     }
 }
