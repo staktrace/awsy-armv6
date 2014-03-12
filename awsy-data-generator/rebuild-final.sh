@@ -19,7 +19,7 @@ fi
 
 PUSHTIME=$(cat pushlog.json | grep "date" | tr -d -c '0123456789')
 FULLCSET=$(cat pushlog.json | grep -B 1 "]" | head -1 | tr -d -c '0123456789abcdefABCDEF')
-TESTTIME=$(stat -c %Y memory-report-TabsClosedForceGC-$PID.json.gz)
+TESTTIME=$(stat -c %Y *memory-report-TabsClosedForceGC-$PID.json.gz)
 TESTNAME="Android-ARMv6"
 
 if [ -z "$PUSHTIME" -o -z "$FULLCSET" ]; then
@@ -30,7 +30,7 @@ fi
 printf 'buildname\n%s\nbuildtime\n%s\ntestname\n%s\ntesttime\n%s\n' "$FULLCSET" "$PUSHTIME" "$TESTNAME" "$TESTTIME" > awsy.final
 
 for i in Start StartSettled TabsOpen TabsOpenSettled TabsOpenForceGC TabsClosed TabsClosedSettled TabsClosedForceGC; do
-    zcat memory-report-$i-$PID.json.gz | java -cp ../../../awsy-data-generator:../../../awsy-data-generator/sts_util.jar Dumper "Iteration 1/$i/" >> awsy.final
+    zcat *memory-report-$i-$PID.json.gz | java -cp ../../../awsy-data-generator:../../../awsy-data-generator/sts_util.jar Dumper "Iteration 1/$i/" >> awsy.final
 done
 
 gzip awsy.final

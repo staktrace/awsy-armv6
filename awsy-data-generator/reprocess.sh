@@ -2,7 +2,7 @@
 
 BUILD=${1?"Usage: $0 <folder>"}
 
-PID=$(ls $BUILD/memory-report-TabsClosedForceGC-*.json.gz 2>/dev/null)
+PID=$(ls $BUILD/*memory-report-TabsClosedForceGC-*.json.gz 2>/dev/null)
 if [ $? -ne 0 ]; then
     echo "Error: did not find complete dataset in $BUILD"
     exit $?
