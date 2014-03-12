@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 for tree in mozilla-inbound fx-team; do
+    export BUILD_TREE=$tree
     export STAGE="http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/$tree-android-armv6"
     export STAGE_POSTFIX=""
     export ROOT=$HOME/awsy-armv6/data/$tree
+    export UPLOAD_DATA_FOLDER=1
     # currently AWSY web interface only accepts inbound data
     if [[ "$tree" == "mozilla-inbound" ]]; then
         export UPLOAD_AWSY_RESULTS=1

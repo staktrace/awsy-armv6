@@ -14,6 +14,9 @@ if [ $? -eq 0 ]; then
                 ./upload.sh $BUILD
                 popd >/dev/null
             fi
+            if [ $UPLOAD_DATA_FOLDER -eq 1 ]; then
+                scp -r $BUILD dream:areweslimyet.mobi/data/$BUILD_TREE/$BUILDID
+            fi
             exit 0;
         fi
         echo "Running the build at $BUILD failed; saving logs to $BUILD/failed-$i"
@@ -28,6 +31,9 @@ if [ $? -eq 0 ]; then
     done
     echo "Unable to run the build $BUILD successfully after 3 attempts; giving up!"
     rm $BUILD/fennec-*-armv6.apk
+    if [ $UPLOAD_DATA_FOLDER -eq 1 ]; then
+        scp -r $BUILD dream:areweslimyet.mobi/data/$BUILD_TREE/$BUILDID
+    fi
     exit 1
 else
     echo "Specified build could not be found"
