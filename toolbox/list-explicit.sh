@@ -12,5 +12,6 @@ for i in $(ls | grep -A $COUNT $START); do
         tail -n 1 $i/*.txt | sed -e "s/.*rev.//" | xargs echo -n
         echo -n " : "
         zgrep -A 1 "$LINE/explicit$" $i/awsy.final.gz | tail -n 1
+        echo ""
     fi
 done
