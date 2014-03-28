@@ -17,5 +17,5 @@ fi
 BUILDFOLDER=${BUILD##*/}
 pushd $BUILD >/dev/null
 echo -n "Uploading $BUILDFOLDER to arcus... "
-cp awsy.final.gz $BUILDFOLDER.gz && scp $BUILDFOLDER.gz johns@arcus:/media/awsy/mobile && rm $BUILDFOLDER.gz && echo "Success!"
+cp awsy.final.gz $BUILDFOLDER.gz && scp $BUILDFOLDER.gz arcus:/media/awsy/mobile && rm $BUILDFOLDER.gz && echo "Success!"
 popd >/dev/null
