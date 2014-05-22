@@ -38,6 +38,8 @@ public class Parser {
         return path.replaceAll( "0x\\p{XDigit}+", "0xSTRIPPED" )
                    .replaceAll( "zone\\(\\p{XDigit}+\\)", "zone(STRIPPED)" )
                    .replaceAll( "\\{\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}\\}", "UUID-STRIPPED" )
-                   .replaceAll( "id=\\p{Digit}+", "id=STRIPPED" );
+                   .replaceAll( "blob:\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}", "blob:UUID-STRIPPED" )
+                   .replaceAll( "id=\\p{Digit}+", "id=STRIPPED" )
+                   .replaceAll( ".jsm:\\p{Digit}+", ".jsm:LINE-STRIPPED" );
     }
 }
