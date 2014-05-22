@@ -143,7 +143,7 @@ public class Plotter {
             out.println( "<div class='group' id='" + StringHash.hash( id ) + "' style='" + style + "'>" );
             out.println( "<h2><pre>" + id + "</pre></h2>" );
             for (String path : group) {
-                out.println( "<div class='item'><a href='graph-" + StringHash.hash( path ) + ".png'><img title='" + path.replaceAll( "\'", "&apos;" ) + "' src='thumb-" + StringHash.hash( path ) + ".png'/></a><br>&nbsp;<span class='toggle' data-target='" + StringHash.hash( path ) + "' onclick='toggle(this)'>Expand</span></div>" );
+                out.println( "<div class='item'><a href='graph-" + StringHash.hash( path ) + ".png'><img title='" + path.replaceAll( "\'", "&apos;" ) + "' src='thumb-" + StringHash.hash( path ) + ".png'/></a><br>&nbsp;<a href='#' class='toggle' data-target='" + StringHash.hash( path ) + "' onclick='toggle(this)'>Expand</a></div>" );
             }
             out.println( "</div>" );
         }
