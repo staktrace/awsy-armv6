@@ -16,6 +16,7 @@ if [ $? -eq 0 ]; then
             fi
             if [ $UPLOAD_DATA_FOLDER -eq 1 ]; then
                 scp -r $BUILD dream:areweslimyet.mobi/data/$BUILD_TREE/$BUILDID
+                scp $SIZE_CSV_FILE dream:areweslimyet.mobi/data/sizes.csv
             fi
             exit 0;
         fi

@@ -18,6 +18,11 @@ pushd $ROOT/$BUILDID >/dev/null 2>&1
 APK=$(links -dump $STAGE/$BUILDID/$STAGE_POSTFIX | grep "fennec-.*-armv6.apk" | awk '{print $3}')
 wget $STAGE/$BUILDID/$STAGE_POSTFIX$APK >/dev/null 2>&1
 wget $STAGE/$BUILDID/$STAGE_POSTFIX${APK//apk/txt} >/dev/null 2>&1
+if [[ -n "$SIZE_CSV_FILE" ]]; then
+  FILESIZE=$(stat -c%s fennec-*-armv6.apk 2>/dev/null)
+  HGURL=$(tail -1 fennec-*-armv6.txt)
+  echo "$HGURL,armv6,$FILESIZE" >> $SIZE_CSV_FILE
+fi
 echo "$ROOT/$BUILDID"
 popd >/dev/null 2>&1
 exit 0
