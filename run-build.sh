@@ -9,7 +9,7 @@ export ROOT=$HOME/awsy-armv6
 export ANDROID_SERIAL=01466E640801401C
 
 FAILED=1
-ls fennec-*-armv6.apk
+ls fennec-*-arm.apk
 if [ $? -eq 0 ]; then
     echo "Setting up device with Fennec..."
     adb shell dumpsys > dumpsys-start.log

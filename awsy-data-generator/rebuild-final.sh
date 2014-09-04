@@ -12,7 +12,7 @@ echo "Processing data in $FOLDER"
 
 pushd $FOLDER >/dev/null
 if [ ! -f "pushlog.json" ]; then
-    HGURL=$(tail -1 fennec-*-armv6.txt)
+    HGURL=$(tail -1 fennec-*-arm.txt)
     PUSHURL=${HGURL/rev\//json-pushes?changeset=}
     curl $PUSHURL > pushlog.json 2>/dev/null
 fi
@@ -20,7 +20,7 @@ fi
 PUSHTIME=$(cat pushlog.json | grep "date" | tr -d -c '0123456789')
 FULLCSET=$(cat pushlog.json | grep -B 1 "]" | head -1 | tr -d -c '0123456789abcdefABCDEF')
 TESTTIME=$(stat -c %Y *memory-report-TabsClosedForceGC-$PID.json.gz)
-TESTNAME="Android-ARMv6"
+TESTNAME="Android-ARM"
 
 if [ -z "$PUSHTIME" -o -z "$FULLCSET" ]; then
     echo "Error! Unable to extract PUSHTIME or FULLCSET from pushlog.json!"

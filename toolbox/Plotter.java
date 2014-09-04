@@ -112,7 +112,7 @@ public class Plotter {
     }
 
     public void dumpIndexFile( PrintStream out ) throws Exception {
-        out.println( "<!DOCTYPE html><html><head><title>AWSY-ARMv6 plotter results</title>" );
+        out.println( "<!DOCTYPE html><html><head><title>AWSY-mobile plotter results</title>" );
         out.println( "<style>div.group { border: solid 1px black }" );
         out.println( "       div.item { display: inline-block; text-align: center } </style>" );
         out.println( "<script>function toggle(elem) {" );

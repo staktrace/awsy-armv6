@@ -8,7 +8,7 @@ if [ $? -eq 0 ]; then
         ./run-build.sh $BUILD
         RESULT=$?
         if [ $RESULT -eq 0 ]; then
-            rm $BUILD/fennec-*-armv6.apk
+            rm $BUILD/fennec-*-arm.apk
             if [ $UPLOAD_AWSY_RESULTS -eq 1 ]; then
                 pushd awsy-data-generator >/dev/null
                 ./upload.sh $BUILD
@@ -31,7 +31,7 @@ if [ $? -eq 0 ]; then
         sleep 5
     done
     echo "Unable to run the build $BUILD successfully after 3 attempts; giving up!"
-    rm $BUILD/fennec-*-armv6.apk
+    rm $BUILD/fennec-*-arm.apk
     if [ $UPLOAD_DATA_FOLDER -eq 1 ]; then
         scp -r $BUILD dream:areweslimyet.mobi/data/$BUILD_TREE/$BUILDID
     fi

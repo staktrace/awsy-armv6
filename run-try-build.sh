@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export STAGE="http://stage.mozilla.org/pub/mozilla.org/firefox/try-builds"
-export STAGE_POSTFIX="try-android-armv6/"
+export STAGE_POSTFIX="try-android/"
 export ROOT=$HOME/awsy-armv6/try-data
 export UPLOAD_AWSY_RESULTS=0
 export UPLOAD_DATA_FOLDER=0

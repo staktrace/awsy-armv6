@@ -3,7 +3,7 @@
 for tree in mozilla-inbound fx-team; do
     export SIZE_CSV_FILE=$HOME/awsy-armv6/data/sizes.csv
     export BUILD_TREE=$tree
-    export STAGE="http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/$tree-android-armv6"
+    export STAGE="http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/$tree-android"
     export STAGE_POSTFIX=""
     export ROOT=$HOME/awsy-armv6/data/$tree
     export UPLOAD_DATA_FOLDER=1

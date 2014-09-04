@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export STAGE="http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/mozilla-inbound-android-armv6"
+export STAGE="http://stage.mozilla.org/pub/mozilla.org/mobile/tinderbox-builds/mozilla-inbound-android"
 export STAGE_POSTFIX=""
 export ROOT=$HOME/awsy-armv6/try-data
 export UPLOAD_AWSY_RESULTS=0
